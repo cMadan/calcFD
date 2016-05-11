@@ -59,8 +59,8 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % The calcFD toolbox is available from: http://cmadan.github.io/calcFD/.
 % 
 % Please cite this paper if you use the toolbox:
-%   Madan, C. R., & Kensinger, E. A. (in press). Cortical complexity as a measure of 
-%       age-related brain atrophy. NeuroImage.
+%   Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of 
+%       age-related brain atrophy. NeuroImage, 134, 617-629.
 %
 % 
 % 20160224 CRM

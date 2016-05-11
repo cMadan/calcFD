@@ -66,17 +66,5 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                       if need to violate this, use multiple input text files.
 % 
 % options.output = filename string to output FD values to
-%
-% ----
-%
-% The calcFD toolbox is available from: http://cmadan.github.io/calcFD/.
-% 
-% Please cite this paper if you use the toolbox:
-%   Madan, C. R., & Kensinger, E. A. (in press). Cortical complexity as a measure of 
-%       age-related brain atrophy. NeuroImage.
-%
-% 
-% 20160224 CRM
-% build 26
 
 ```

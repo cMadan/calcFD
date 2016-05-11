@@ -6,7 +6,7 @@ Current public version: build 26 [20160224]
 ## Citing the toolbox
 Please cite this paper if you use the toolbox:
 
-Madan, C. R., & Kensinger, E. A. (in press). Cortical complexity as a measure of age-related brain atrophy. NeuroImage.
+Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of age-related brain atrophy. NeuroImage, 134, 617-629.
 
 ## Documentation
 

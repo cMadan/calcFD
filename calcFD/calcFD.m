@@ -6,7 +6,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % 
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
 %
-% Inputs:
+% REQUIRED INPUTS:
 % subjects      = list of subjects names in a cell array
 %                 alternatively accepts {'.'} to run on all subjects in folder
 %
@@ -47,12 +47,19 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                   See FreeSurfer files (e.g., FreeSurferColorLUT.txt, ASegStatsLUT.txt, 
 %                       WMParcStatsLUT.txt) for mapping of region intensities to names.
 %                   Multiple region values on the same row will be processed as a single structure.
-%                   Currently requires each row to have the same number of values,
-%                       if need to violate this, use multiple input text files.
 %                   Currently cannot use the same region in more than one row,
 %                       if need to violate this, use multiple input text files.
+%                   See 'select_subcort.txt' and 'select_ventricles.txt' for examples.
 % 
 % options.output = filename string to output FD values to
+%
+%
+% OPTIONAL INPUTS:
+% options.boxsizes = list of numbers
+%                    Default: 2.^[0:4] (resolves to [1,2,4,8,16])
+%                    Specify what 'box sizes' (also applies to dialation algorithm) to use 
+%                    when calculating FD.
+%                    Preferred to scale in powers of two.
 %
 % ----
 %
@@ -61,10 +68,22 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % Please cite this paper if you use the toolbox:
 %   Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of 
 %       age-related brain atrophy. NeuroImage, 134, 617-629.
+%       doi:10.1016/j.neuroimage.2016.04.029
+%
+% If you use the toolbox with subcortical/ventricular structures, please also cite:
+%   Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural 
+%       complexity of subcortical and ventricular structures. Neurobiology of Aging. 
+%       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 
-% 20160224 CRM
-% build 26
+% 20160227 CRM
+% build 27
+
+% process optional inputs
+if ~isfield(options,'boxsizes')
+    options.boxsizes = 2.^[0:4];
+    % resolves to [1,2,4,8,16]
+end
 
 % get full list of subjects if asked
 if strcmp(subjects{1},'.');
@@ -80,6 +99,12 @@ elseif length(strfind(subjects{1},'*'))==1
     list = dir(fullfile(subjectpath,subjects{1}));
     list = {list([list.isdir]).name};
     subjects = list;
+end
+
+% error handling
+if ~exist('strlen')
+    disp('MATLAB-FreeSurfer functions not found in MATLAB path.')
+    disp('Please see https://surfer.nmr.mgh.harvard.edu/fswiki/UserContributions/FAQ#FreeSurfer.26Matlab')
 end
 
 for s = 1:length(subjects)
@@ -130,7 +155,14 @@ for s = 1:length(subjects)
             vol_mask = zeros(size(vol));
             for l = select(:)'
                 ll = find(sum(select==l,2)); % line number
-                vol_mask(vol==l) = ll;
+                % fix for limitation of 'each row to have the same number of values' 
+                vx = vol==l;
+                if sum(vx) == 0
+                    %disp(sprintf('No match for  %g.',l))
+                else
+                    vol_mask(vx) = ll;
+                end
+                % patch end
             end
             
             % replace vol with vol_mask
@@ -158,8 +190,7 @@ for s = 1:length(subjects)
             end
             
             % box sizes to measure complexity, scaled by powers of 2
-            r = 0:4;
-            r = 2.^r;
+            r = options.boxsizes;
             
             % extract portion of vol that is specific label
             vol_label = (vol==labels(l));
@@ -193,6 +224,11 @@ for s = 1:length(subjects)
         % for debugging
         % save([options.output(1:(end-4))])
     end
+end
+
+% error handling
+if ~exist('fd')
+    disp('No FD values calculated. Please check that ''subjects'' and ''subjectpath'' were specified correctly.');
 end
 
 if isfield(options,'output')

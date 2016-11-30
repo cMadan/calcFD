@@ -1,12 +1,15 @@
 # calcFD toolbox
 A toolbox for MATLAB for calculating the fractal dimensionality of a 3D structure, designed to work with intermediate files from FreeSurfer analysis pipeline, but can also use other volumes.
 
-Current public version: build 26 [20160224]
+Current public version: build 27 [20160227]
 
 ## Citing the toolbox
 Please cite this paper if you use the toolbox:
 
 Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of age-related brain atrophy. *NeuroImage, 134*, 617-629. doi:10.1016/j.neuroimage.2016.04.029
+
+If you use the toolbox with subcortical/ventricular structures, please **also** cite:
+Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural complexity of subcortical and ventricular structures. *Neurobiology of Aging*. doi:10.1016/j.neurobiolaging.2016.10.023
 
 ## Documentation
 
@@ -19,7 +22,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % 
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
 %
-% Inputs:
+% REQUIRED INPUTS:
 % subjects      = list of subjects names in a cell array
 %                 alternatively accepts {'.'} to run on all subjects in folder
 %
@@ -60,11 +63,39 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                   See FreeSurfer files (e.g., FreeSurferColorLUT.txt, ASegStatsLUT.txt, 
 %                       WMParcStatsLUT.txt) for mapping of region intensities to names.
 %                   Multiple region values on the same row will be processed as a single structure.
-%                   Currently requires each row to have the same number of values,
-%                       if need to violate this, use multiple input text files.
 %                   Currently cannot use the same region in more than one row,
 %                       if need to violate this, use multiple input text files.
+%                   See 'select_subcort.txt' and 'select_ventricles.txt' for examples.
 % 
 % options.output = filename string to output FD values to
+%
+%
+% OPTIONAL INPUTS:
+% options.boxsizes = list of numbers
+%                    Default: 2.^[0:4] (resolves to [1,2,4,8,16])
+%                    Specify what 'box sizes' (also applies to dialation algorithm) to use 
+%                    when calculating FD.
+%                    Preferred to scale in powers of two.
+%
+% ----
+%
+% The calcFD toolbox is available from: http://cmadan.github.io/calcFD/.
+% 
+% Please cite this paper if you use the toolbox:
+%   Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of 
+%       age-related brain atrophy. NeuroImage, 134, 617-629.
+%       doi:10.1016/j.neuroimage.2016.04.029
+%
+% If you use the toolbox with subcortical/ventricular structures, please also cite:
+%   Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural 
+%       complexity of subcortical and ventricular structures. Neurobiology of Aging. 
+%       doi:10.1016/j.neurobiolaging.2016.10.023
+%
+% 
+% 20160227 CRM
+% build 27
 
 ```
+
+# Potential future improvements
+- Read label names from `_legend.txt` files, rather than just assigning label1, label2, etc. in header row

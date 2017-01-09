@@ -20,12 +20,17 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                       0   == Surface-only (FDs)
 %                       1   == Filled volume (FDf)
 %
-% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'none'
+% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'none'
 %                 'Ribbon'      == Cortical Ribbon (unparcellated)
-%                 'Dest_aparc'  == Parcellated cortical regions, 
+%                 'Dest_aparc'  == Parcellated cortical regions (Destrieux) 
 %                                   ** requires options.input.
 %                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume, 
 %                                   ** requires options.input.
+%                 'DKT'         == Parcellated cortical regions (DKT).
+%                                   ** requires aparc.DKTaltas40+aseg.mgz to exist.
+%                                   The volume can be generated using:
+%                                   mri_aparc2aseg --s [SUBJECTID] --annot aparc.DKTatlas40
+%                                   See Madan & Kensinger (2017, Brain Informatics) for further details. 
 %                 'none'        == Binarized volume to be manually entered 
 %                                   (e.g., benchmark volumes).
 %
@@ -76,8 +81,8 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 
-% 20160227 CRM
-% build 27
+% 20160616 CRM
+% build 28
 
 % process optional inputs
 if ~isfield(options,'boxsizes')
@@ -169,7 +174,16 @@ for s = 1:length(subjects)
             vol = vol_mask;
             labels = unique(vol);
             labels = setdiff(labels,0);
-            
+
+        case 'DKT'
+            vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas40+aseg.mgz');
+            vol = load_mgh(vol_fname);
+            labels = unique(vol);
+            % only the cortical regions
+            labels = labels(labels>999);
+            % remove the 'unknown' regions
+            labels = setdiff(labels,[ 1000 2000]);
+
         case 'none'
             vol_fname = fullfile(subjectpath,[subjects{s} '.mgz']);
             vol = load_mgh(vol_fname);

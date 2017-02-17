@@ -10,7 +10,7 @@ Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of age
 
 If you use the toolbox with subcortical/ventricular structures, please **also** cite:
 
-Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural complexity of subcortical and ventricular structures. *Neurobiology of Aging*. doi:10.1016/j.neurobiolaging.2016.10.023
+Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural complexity of subcortical and ventricular structures. *Neurobiology of Aging, 50*, 87-95. doi:10.1016/j.neurobiolaging.2016.10.023
 
 Also see:
 
@@ -99,7 +99,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %
 % If you use the toolbox with subcortical/ventricular structures, please also cite:
 %   Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural 
-%       complexity of subcortical and ventricular structures. Neurobiology of Aging. 
+%       complexity of subcortical and ventricular structures. Neurobiology of Aging, 50, 87-95. 
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 

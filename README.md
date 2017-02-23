@@ -84,7 +84,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % OPTIONAL INPUTS:
 % options.boxsizes = list of numbers
 %                    Default: 2.^[0:4] (resolves to [1,2,4,8,16])
-%                    Specify what 'box sizes' (also applies to dialation algorithm) to use 
+%                    Specify what 'box sizes' (also applies to dilation algorithm) to use 
 %                    when calculating FD.
 %                    Preferred to scale in powers of two.
 %

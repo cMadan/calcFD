@@ -6,15 +6,15 @@ Current public version: build 28 [20160616]
 ## Citing the toolbox
 Please cite this paper if you use the toolbox:
 
-Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of age-related brain atrophy. *NeuroImage, 134*, 617-629. doi:10.1016/j.neuroimage.2016.04.029
+* Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of age-related brain atrophy. *NeuroImage, 134*, 617-629. doi:10.1016/j.neuroimage.2016.04.029
 
 If you use the toolbox with subcortical/ventricular structures, please **also** cite:
 
-Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural complexity of subcortical and ventricular structures. *Neurobiology of Aging, 50*, 87-95. doi:10.1016/j.neurobiolaging.2016.10.023
+* Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural complexity of subcortical and ventricular structures. *Neurobiology of Aging, 50*, 87-95. doi:10.1016/j.neurobiolaging.2016.10.023
 
 Also see:
 
-Madan, C. R., & Kensinger, E. A. (2017). Test-retest reliability of brain morphology estimates. *Brain Informatics*. doi:10.1007/s40708-016-0060-4  
+* Madan, C. R., & Kensinger, E. A. (2017). Test-retest reliability of brain morphology estimates. *Brain Informatics, 4*, 107-121. doi:10.1007/s40708-016-0060-4  
 
 
 ## Documentation

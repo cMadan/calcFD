@@ -1,7 +1,7 @@
 # calcFD toolbox
 A toolbox for MATLAB for calculating the fractal dimensionality of a 3D structure, designed to work with intermediate files from FreeSurfer analysis pipeline, but can also use other volumes.
 
-Current public version: build 28 [20160616]
+Current public version: build 30 [20180313]
 
 ## Citing the toolbox
 Please cite this paper if you use the toolbox:
@@ -106,6 +106,8 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % 20160616 CRM
 % build 28
 ```
+
+To use the toolbox with data in NIfTI format, see `example_nii` in examples.
 
 # Potential future improvements
 - Read label names from `_legend.txt` files, rather than just assigning label1, label2, etc. in header row

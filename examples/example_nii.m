@@ -21,7 +21,7 @@ vol = V == 1;
 addpath('calcFD')
 r = 2.^[0:4]; % box kernel size
 n = calcFD_dilate(vol,r); 
-c = [log2(fd_box)' ones(length(r),1)] \ -log2(n)'; 
+c = [log2(r)' ones(length(r),1)] \ -log2(n)'; 
 fd = c(1);
 
 %%

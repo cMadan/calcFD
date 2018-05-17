@@ -1,7 +1,7 @@
 function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % Calculate the fractal dimensionality of a 3D structure.
 % Designed to work with intermediate files from FreeSurfer analysis pipeline
-%   (ribbon.mgz, aparc.a2009s+aseg.mgz).
+%   (ribbon.mgz, aparc.a2009s+aseg.mgz, and others).
 % Also can use other mgz volume as input (e.g., see 'benchmark folder').
 % 
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
@@ -20,17 +20,24 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                       0   == Surface-only (FDs)
 %                       1   == Filled volume (FDf)
 %
-% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'none'
+% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'Economo' | 'none'
 %                 'Ribbon'      == Cortical Ribbon (unparcellated)
 %                 'Dest_aparc'  == Parcellated cortical regions (Destrieux) 
 %                                   ** requires options.input.
 %                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume, 
 %                                   ** requires options.input.
 %                 'DKT'         == Parcellated cortical regions (DKT).
-%                                   ** requires aparc.DKTaltas40+aseg.mgz to exist.
-%                                   The volume can be generated using:
+%                                   ** requires aparc.DKTaltas40+aseg.mgz (FS 6) or 
+%                                      aparc.DKTaltas40+aseg.mgz (FS 5.3) to exist.
+%                                   The volume can be generated (FS 5.3) using:
 %                                   mri_aparc2aseg --s [SUBJECTID] --annot aparc.DKTatlas40
-%                                   See Madan & Kensinger (2017, Brain Informatics) for further details. 
+%                                   See Madan & Kensinger (2017, Brain Informatics) for further details.
+%                 'Economo'     == Parcellated cortical regions (von Economo-Koskinas).
+%                                   ** requires economo+aseg.mgz to exist.
+%                                   The volume can be generated using:
+%                                   mris_ca_label, mris_anatomical_stats 
+%                                   See Scholtens et al. (2018, NeuroImage) and 
+%                                   Madan & Kensinger (2018, Eur J Neurosci) for further details.
 %                 'none'        == Binarized volume to be manually entered 
 %                                   (e.g., benchmark volumes).
 %
@@ -81,8 +88,8 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 
-% 20160616 CRM
-% build 28
+% 20180517 CRM
+% build 31
 
 % process optional inputs
 if ~isfield(options,'boxsizes')
@@ -176,14 +183,30 @@ for s = 1:length(subjects)
             labels = setdiff(labels,0);
 
         case 'DKT'
-            vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas40+aseg.mgz');
+		    try
+			    % FreeSurfer 5.3, requires mri_aparc2aseg to also be run
+                vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas40+aseg.mgz');
+			catch
+			    % FreeSurfer 6.0, volume should be created automatically by standard recon-all pipeline
+                vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas+aseg.mgz');
+			end
             vol = load_mgh(vol_fname);
             labels = unique(vol);
             % only the cortical regions
             labels = labels(labels>999);
             % remove the 'unknown' regions
-            labels = setdiff(labels,[ 1000 2000]);
-
+            labels = setdiff(labels,[1000 2000]);
+			
+        case {'Economo'}
+		    % see help for direction on how to generate this volume
+            vol_fname = fullfile(subjectpath,subjects{s},'mri','economo+aseg.mgz');
+            vol = load_mgh(vol_fname);
+            labels = unique(vol);
+            % only the cortical regions
+            labels = labels(labels>999);
+            % remove the 'unknown' regions
+            labels = setdiff(labels,[1000 2000]);
+			
         case 'none'
             vol_fname = fullfile(subjectpath,[subjects{s} '.mgz']);
             vol = load_mgh(vol_fname);

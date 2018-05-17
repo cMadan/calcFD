@@ -1,5 +1,5 @@
 % 20160209 CRM
-addpath('calcFD')
+addpath('../calcFD')
 
 sample              = 'IXI';
 subjectpath         = sprintf('~/path/to/data/%s/surf/',sample);

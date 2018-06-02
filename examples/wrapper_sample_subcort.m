@@ -2,7 +2,7 @@
 % 20180502 SK: modified to read in label names from a text file 
 % if 'options.labelfile' is 'none', label names default to numerical 
 
-addpath('calcFD')
+addpath('../calcFD')
 
 sample              = 'IXI';
 subjectpath         = sprintf('~/path/to/data/%s/surf/',sample);

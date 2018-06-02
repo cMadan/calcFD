@@ -1,7 +1,9 @@
 # calcFD toolbox
 A toolbox for MATLAB for calculating the fractal dimensionality of a 3D structure, designed to work with intermediate files from FreeSurfer analysis pipeline, but can also use other volumes.
 
-Current public version: build 30 [20180313]
+To use the toolbox with data in NIfTI format, see `example_nii` in examples.
+
+Current public version: build 31 [20180517]
 
 ## Citing the toolbox
 Please cite this paper if you use the toolbox:
@@ -20,10 +22,9 @@ Also see:
 ## Documentation
 
 ```
-function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % Calculate the fractal dimensionality of a 3D structure.
 % Designed to work with intermediate files from FreeSurfer analysis pipeline
-%   (ribbon.mgz, aparc.a2009s+aseg.mgz).
+%   (ribbon.mgz, aparc.a2009s+aseg.mgz, and others).
 % Also can use other mgz volume as input (e.g., see 'benchmark folder').
 % 
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
@@ -42,17 +43,24 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                       0   == Surface-only (FDs)
 %                       1   == Filled volume (FDf)
 %
-% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'none'
+% options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'Economo' | 'none'
 %                 'Ribbon'      == Cortical Ribbon (unparcellated)
 %                 'Dest_aparc'  == Parcellated cortical regions (Destrieux) 
 %                                   ** requires options.input.
 %                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume, 
 %                                   ** requires options.input.
 %                 'DKT'         == Parcellated cortical regions (DKT).
-%                                   ** requires aparc.DKTaltas40+aseg.mgz to exist.
-%                                   The volume can be generated using:
+%                                   ** requires aparc.DKTaltas40+aseg.mgz (FS 6) or 
+%                                      aparc.DKTaltas40+aseg.mgz (FS 5.3) to exist.
+%                                   The volume can be generated (FS 5.3) using:
 %                                   mri_aparc2aseg --s [SUBJECTID] --annot aparc.DKTatlas40
-%                                   See Madan & Kensinger (2017, Brain Informatics) for further details. 
+%                                   See Madan & Kensinger (2017, Brain Informatics) for further details.
+%                 'Economo'     == Parcellated cortical regions (von Economo-Koskinas).
+%                                   ** requires economo+aseg.mgz to exist.
+%                                   The volume can be generated using:
+%                                   mris_ca_label, mris_anatomical_stats 
+%                                   See Scholtens et al. (2018, NeuroImage) and 
+%                                   Madan & Kensinger (2018, Eur J Neurosci) for further details.
 %                 'none'        == Binarized volume to be manually entered 
 %                                   (e.g., benchmark volumes).
 %
@@ -103,11 +111,6 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 
-% 20160616 CRM
-% build 28
+% 20180517 CRM
+% build 31
 ```
-
-To use the toolbox with data in NIfTI format, see `example_nii` in examples.
-
-# Potential future improvements
-- Read label names from `_legend.txt` files, rather than just assigning label1, label2, etc. in header row

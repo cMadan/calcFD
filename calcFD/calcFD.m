@@ -3,7 +3,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % Designed to work with intermediate files from FreeSurfer analysis pipeline
 %   (ribbon.mgz, aparc.a2009s+aseg.mgz, and others).
 % Also can use other mgz volume as input (e.g., see 'benchmark folder').
-% 
+%
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
 %
 % REQUIRED INPUTS:
@@ -22,9 +22,9 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %
 % options.aparc = 'Ribbon' | 'Dest_aparc' | 'Dest_select' | 'DKT' | 'Economo' | 'none'
 %                 'Ribbon'      == Cortical Ribbon (unparcellated)
-%                 'Dest_aparc'  == Parcellated cortical regions (Destrieux) 
+%                 'Dest_aparc'  == Parcellated cortical regions (Destrieux)
 %                                   ** requires options.input.
-%                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume, 
+%                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume,
 %                                   ** requires options.input.
 %                 'DKT'         == Parcellated cortical regions (DKT).
 %                                   ** requires aparc.DKTaltas+aseg.mgz (FS 6) or 
@@ -43,58 +43,76 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %
 % options.input = filename string, required for 'Dest_aparc' and 'Dest_select
 %               if options.aparc == 'Dest_aparc'
-%                   This should be a file with the name 'mask_*.txt', 
+%                   This should be a file with the name 'mask_*.txt',
 %                       where * is the value in options.input.
 %                   File should have either 74 or 148 rows, only 1 column.
 %                       If only 74 values, labels are assigned bilaterally.
-%                   Value in each row is the label to assign to that parcellated region, 
+%                   Value in each row is the label to assign to that parcellated region,
 %                       based on the Destrieux et al. (2010) parcellation scheme.
 %                   See 'mask_lobe.txt' for an example.
 %                   See 'calcFD_mask.xlsx' for a list of which regions correspond to each row number.
 %               --
 %               if options.aparc == 'Dest_select'
-%                   This should be a file with the name 'select_*.txt', 
+%                   This should be a file with the name 'select_*.txt',
 %                       where * is the value in options.input.
 %                   Regions correspond to intensity values in aparc.a2009s+aseg.mgz.
-%                   See FreeSurfer files (e.g., FreeSurferColorLUT.txt, ASegStatsLUT.txt, 
+%                   See FreeSurfer files (e.g., FreeSurferColorLUT.txt, ASegStatsLUT.txt,
 %                       WMParcStatsLUT.txt) for mapping of region intensities to names.
 %                   Multiple region values on the same row will be processed as a single structure.
 %                   Currently cannot use the same region in more than one row,
 %                       if need to violate this, use multiple input text files.
 %                   See 'select_subcort.txt' and 'select_ventricles.txt' for examples.
-% 
+%
+%
+% options.labelfile = filename string of the text file providing the label names of the analyzed brain regions.
+%                       Can be either 'none' if no such file is available or '*.txt',
+%                       see 'select_subcort_legend.txt' for an example.
+%                       If specified as 'none', brain regions will be labeled numerically.
+%
+%
 % options.output = filename string to output FD values to
 %
 %
 % OPTIONAL INPUTS:
 % options.boxsizes = list of numbers
 %                    Default: 2.^[0:4] (resolves to [1,2,4,8,16])
-%                    Specify what 'box sizes' (also applies to dilation algorithm) to use 
+%                    Specify what 'box sizes' (also applies to dilation algorithm) to use
 %                    when calculating FD.
 %                    Preferred to scale in powers of two.
 %
 % ----
 %
 % The calcFD toolbox is available from: http://cmadan.github.io/calcFD/.
-% 
+%
 % Please cite this paper if you use the toolbox:
-%   Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of 
+%   Madan, C. R., & Kensinger, E. A. (2016). Cortical complexity as a measure of
 %       age-related brain atrophy. NeuroImage, 134, 617-629.
 %       doi:10.1016/j.neuroimage.2016.04.029
 %
 % If you use the toolbox with subcortical/ventricular structures, please also cite:
-%   Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural 
-%       complexity of subcortical and ventricular structures. Neurobiology of Aging, 50, 87-95. 
+%   Madan, C. R., & Kensinger, E. A. (2017). Age-related differences in the structural
+%       complexity of subcortical and ventricular structures. Neurobiology of Aging, 50, 87-95.
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
 % 
 % 20180517 CRM
 % build 31
+%
+% 20180503 SK: modified to include text file with label names as input,
+% see 'options.labelfile' above and the examples in wrapper_sample.m and
+% wrapper_sample_subcort.m.
 
 % process optional inputs
 if ~isfield(options,'boxsizes')
     options.boxsizes = 2.^[0:4];
     % resolves to [1,2,4,8,16]
+end
+
+% 20180503 SK: check if label file is provided
+if strcmp(options.labelfile, 'none')
+    labelfile = 'none'              ;
+else
+    labelfile = options.labelfile   ;
 end
 
 % get full list of subjects if asked
@@ -130,7 +148,7 @@ for s = 1:length(subjects)
             % in cortical ribbon, GM = 42/3
             vol = (vol==3) | (vol==42);
             labels = 1;
-                        
+            
         case 'Dest_aparc'
             vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.a2009s+aseg.mgz');
             vol = load_mgh(vol_fname);
@@ -167,7 +185,7 @@ for s = 1:length(subjects)
             vol_mask = zeros(size(vol));
             for l = select(:)'
                 ll = find(sum(select==l,2)); % line number
-                % fix for limitation of 'each row to have the same number of values' 
+                % fix for limitation of 'each row to have the same number of values'
                 vx = vol==l;
                 if sum(vx) == 0
                     %disp(sprintf('No match for  %g.',l))
@@ -181,15 +199,15 @@ for s = 1:length(subjects)
             vol = vol_mask;
             labels = unique(vol);
             labels = setdiff(labels,0);
-
+            
         case 'DKT'
-		    try
-			    % FreeSurfer 5.3, requires mri_aparc2aseg to also be run
+            try
+                % FreeSurfer 5.3, requires mri_aparc2aseg to also be run
                 vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas40+aseg.mgz');
-			catch
-			    % FreeSurfer 6.0, volume should be created automatically by standard recon-all pipeline
+            catch
+                % FreeSurfer 6.0, volume should be created automatically by standard recon-all pipeline
                 vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas+aseg.mgz');
-			end
+            end
             vol = load_mgh(vol_fname);
             labels = unique(vol);
             % only the cortical regions
@@ -212,7 +230,7 @@ for s = 1:length(subjects)
             vol = load_mgh(vol_fname);
             labels = unique(vol);
             labels = setdiff(labels,0);
-
+            
         otherwise
             % not sure what to do with that request...
             disp(sprintf('%s is not a valid parcellation scheme',options.aparc));
@@ -270,8 +288,11 @@ end
 
 if isfield(options,'output')
     % output FD txt file to working directory
-    calcFD_save(options.output,fd,subjects,labels);
+    
+    calcFD_save(options.output,fd,subjects,labels,labelfile); % 20180502 SK: modified to include labelfile argument
+    
+end
 end
 
 % delete debug temp file
-% delete([options.output(1:(end-4)) '.mat']) 
+% delete([options.output(1:(end-4)) '.mat'])

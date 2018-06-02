@@ -1,0 +1,5 @@
+Frontal
+Parietal
+Temporal
+Occipital
+

@@ -27,7 +27,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume, 
 %                                   ** requires options.input.
 %                 'DKT'         == Parcellated cortical regions (DKT).
-%                                   ** requires aparc.DKTaltas40+aseg.mgz (FS 6) or 
+%                                   ** requires aparc.DKTaltas+aseg.mgz (FS 6) or 
 %                                      aparc.DKTaltas40+aseg.mgz (FS 5.3) to exist.
 %                                   The volume can be generated (FS 5.3) using:
 %                                   mri_aparc2aseg --s [SUBJECTID] --annot aparc.DKTatlas40

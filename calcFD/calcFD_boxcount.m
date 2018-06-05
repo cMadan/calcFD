@@ -4,7 +4,7 @@ function n = calcFD_boxcount(vol,r)
 
 if length(size(vol)) <  3 | length(r) < 1
     % unable to calculate any box counting
-    fprintf('Failed to count!')
+    disp('Failed to count!')
     n = NaN;
     return;
 end
@@ -35,7 +35,9 @@ for rr = r
 
     nn = sum(vol_r(:)>0);
     if nn==0
-        % found no voxels, shouldn't occur
+        disp('calcFD: Found no voxels for region, something went wrong.')
+        disp('Entering interactive debug mode ("keyboard")...')
+        disp('Type "dbquit" to exit debug mode.')
         keyboard
     end
     n(find(r==rr)) = nn;

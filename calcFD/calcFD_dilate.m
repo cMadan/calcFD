@@ -16,7 +16,9 @@ for rr = r
     nn = sum(vol_r(:)>0);
     nn = nn/rr^3;
     if nn==0
-        % found no voxels, shouldn't occur
+        disp('calcFD: Found no voxels for region, something went wrong.')
+        disp('Entering interactive debug mode ("keyboard")...')
+        disp('Type "dbquit" to exit debug mode.')
         keyboard
     end
     n(find(r==rr)) = nn;

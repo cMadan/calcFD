@@ -7,8 +7,10 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % See 'wrapper_sample.m' for an example of how to use the calcFD toolbox.
 %
 % REQUIRED INPUTS:
-% subjects      = list of subjects names in a cell array
-%                 alternatively accepts {'.'} to run on all subjects in folder
+% subjects      = list of subjects names in a cell array.
+%                 Alternatively accepts {'.'} to run on all subjects in folder.
+%                 {'.'} will only work if there are no non-subject directories 
+%                 in the folder, but does skip 'fsaverage' and 'fmirprep'.
 %
 % subjectpath   = FreeSurfer 'SUBJECTDIR' where standard directory structure is
 %
@@ -120,10 +122,13 @@ if strcmp(subjects{1},'.');
     list = dir(fullfile(subjectpath));
     list = {list([list.isdir]).name};
     
-    % excl the non-subject folders
-    excl = [1:2 find(cellfun(@length,strfind(list,'average')))];
+    % exclude the known non-subject folders
+    excl = [1:2]; % skip '.' and '..'
+    excl = [excl find(cellfun(@length,strfind(list,'fsaverage')))];
+    excl = [excl find(cellfun(@length,strfind(list,'fmriprep')))];
     list = list(setdiff(1:length(list),excl));
     subjects = list;
+    
 elseif length(strfind(subjects{1},'*'))==1
     % subjects name has a wildcard, but only expect one entry then
     list = dir(fullfile(subjectpath,subjects{1}));

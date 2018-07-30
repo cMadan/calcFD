@@ -18,4 +18,6 @@ This is a list of publications that have used the calcFD toolbox. If you have us
 
 * Madan, C. R., & Kensinger, E. A. (2018). Predicting age from cortical structure across the lifespan. *European Journal of Neuroscience, 47*, 399-416. doi:10.1111/ejn.13835  
 
-* Canna, A., Russo, A. G., Ponticorvo, S., Manara, R., Pepino, A., Sansone, M., ... & Esposito, F. (2018). Automated search of control points in surface-based morphometry. *NeuroImage*. doi:10.1016/j.neuroimage.2018.04.035
+* Canna, A., Russo, A. G., Ponticorvo, S., Manara, R., Pepino, A., Sansone, M., ... & Esposito, F. (2018). Automated search of control points in surface-based morphometry. *NeuroImage, 176*, 56-70. doi:10.1016/j.neuroimage.2018.04.035
+
+* Madan, C. R. (2018). Age differences in head motion and estimates of cortical morphology. *PeerJ, 6*, e5176. doi:10.7717/peerj.5176

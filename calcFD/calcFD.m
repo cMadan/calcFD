@@ -9,7 +9,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 % REQUIRED INPUTS:
 % subjects      = list of subjects names in a cell array.
 %                 Alternatively accepts {'.'} to run on all subjects in folder.
-%                 {'.'} will only work if there are no non-subject directories 
+%                 {'.'} will only work if there are no non-subject directories
 %                 in the folder, but does skip 'fsaverage' and 'fmirprep'.
 %
 % subjectpath   = FreeSurfer 'SUBJECTDIR' where standard directory structure is
@@ -29,7 +29,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                 'Dest_select' == Any region in the aparc.a2009s+aseg.mgz volume,
 %                                   ** requires options.input.
 %                 'DKT'         == Parcellated cortical regions (DKT).
-%                                   ** requires aparc.DKTaltas+aseg.mgz (FS 6) or 
+%                                   ** requires aparc.DKTaltas+aseg.mgz (FS 6) or
 %                                      aparc.DKTaltas40+aseg.mgz (FS 5.3) to exist.
 %                                   The volume can be generated (FS 5.3) using:
 %                                   mri_aparc2aseg --s [SUBJECTID] --annot aparc.DKTatlas40
@@ -37,10 +37,10 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %                 'Economo'     == Parcellated cortical regions (von Economo-Koskinas).
 %                                   ** requires economo+aseg.mgz to exist.
 %                                   The volume can be generated using:
-%                                   mris_ca_label, mris_anatomical_stats 
-%                                   See Scholtens et al. (2018, NeuroImage) and 
+%                                   mris_ca_label, mris_anatomical_stats
+%                                   See Scholtens et al. (2018, NeuroImage) and
 %                                   Madan & Kensinger (2018, Eur J Neurosci) for further details.
-%                 'none'        == Binarized volume to be manually entered 
+%                 'none'        == Binarized volume to be manually entered
 %                                   (e.g., benchmark volumes).
 %
 % options.input = filename string, required for 'Dest_aparc' and 'Dest_select
@@ -96,7 +96,7 @@ function [fd,subjects] = calcFD(subjects,subjectpath,options)
 %       complexity of subcortical and ventricular structures. Neurobiology of Aging, 50, 87-95.
 %       doi:10.1016/j.neurobiolaging.2016.10.023
 %
-% 
+%
 % 20180517 CRM
 % build 31
 %
@@ -209,19 +209,20 @@ for s = 1:length(subjects)
             try
                 % FreeSurfer 5.3, requires mri_aparc2aseg to also be run
                 vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas40+aseg.mgz');
+                vol = load_mgh(vol_fname);
             catch
                 % FreeSurfer 6.0, volume should be created automatically by standard recon-all pipeline
                 vol_fname = fullfile(subjectpath,subjects{s},'mri','aparc.DKTatlas+aseg.mgz');
+                vol = load_mgh(vol_fname);
             end
-            vol = load_mgh(vol_fname);
             labels = unique(vol);
             % only the cortical regions
             labels = labels(labels>999);
             % remove the 'unknown' regions
             labels = setdiff(labels,[1000 2000]);
-			
+            
         case {'Economo'}
-		    % see help for direction on how to generate this volume
+            % see help for direction on how to generate this volume
             vol_fname = fullfile(subjectpath,subjects{s},'mri','economo+aseg.mgz');
             vol = load_mgh(vol_fname);
             labels = unique(vol);
@@ -229,7 +230,7 @@ for s = 1:length(subjects)
             labels = labels(labels>999);
             % remove the 'unknown' regions
             labels = setdiff(labels,[1000 2000]);
-			
+            
         case 'none'
             vol_fname = fullfile(subjectpath,[subjects{s} '.mgz']);
             vol = load_mgh(vol_fname);

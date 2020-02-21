@@ -110,6 +110,10 @@ if ~isfield(options,'boxsizes')
     % resolves to [1,2,4,8,16]
 end
 
+% make labelfile optional
+if ~isfield(options,'labelfile')
+	options.labelfile   = 'none';
+end
 % 20180503 SK: check if label file is provided
 if strcmp(options.labelfile, 'none')
     labelfile = 'none'              ;

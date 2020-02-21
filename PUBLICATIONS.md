@@ -24,4 +24,4 @@ This is a list of publications that have used the calcFD toolbox. If you have us
 
 * Madan, C. R. (2019). Shape-related characteristics of age-related differences in subcortical structures. *Aging & Mental Health, 23*, 800-810. doi:10.1080/13607863.2017.1421613 
 
-* Krohn, S., Froeling, M., Leemans, A., Ostwald, D., Villoslada, P., Finke, C., & Esteban, F. J. (2019). Evaluation of the 3D fractal dimension as a marker of structural brain complexity in multiple‐acquisition MRI. *Human Brain Mapping*. doi:10.1002/hbm.24599
+* Krohn, S., Froeling, M., Leemans, A., Ostwald, D., Villoslada, P., Finke, C., & Esteban, F. J. (2019). Evaluation of the 3D fractal dimension as a marker of structural brain complexity in multiple‐acquisition MRI. *Human Brain Mapping, 40*, 3299-3320. doi:10.1002/hbm.24599

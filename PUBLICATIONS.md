@@ -30,7 +30,10 @@ This is a list of publications that have used the calcFD toolbox. If you have us
 
 * Collantoni, E., Madan, C. R., Meneguzzo, P., Chiappini, I., Tenconi, E., Manara, R., & Favaro, A. (2020). Cortical complexity in Anorexia Nervosa: A fractal dimension analysis. *Journal of Clinical Medicine, 9*, 833. doi:10.3390/jcm9030833
 
-* Liu, H., Liu, T., Jiang, J., Cheng, J., Liu, Y., Li, D., ... & Brodaty, H. (2020). Differential longitudinal changes in structural complexity and volumetric measures in community-dwelling older individuals. *Neurobiology of Aging*. doi:10.1016/j.neurobiolaging.2020.02.023
+* Liu, H., Liu, T., Jiang, J., Cheng, J., Liu, Y., Li, D., ... & Brodaty, H. (2020). Differential longitudinal changes in structural complexity and volumetric measures in community-dwelling older individuals. *Neurobiology of Aging, 91*, 26-35. doi:10.1016/j.neurobiolaging.2020.02.023
 
 * Cascino, G., Canna, A., Monteleone, A. M., Russo, A. G., Prinster, A., Aiello, M., ... & Monteleone, P. (2020). Cortical Thickness, local Gyrification Index and Fractal Dimensionality in people with acute and recovered Anorexia Nervosa and in people with Bulimia Nervosa. *Psychiatry Research: Neuroimaging, 299*, 111069. doi:10.1016/j.pscychresns.2020.111069
 
+* McDonough, I. M., & Madan, C. R. (in press). Structural complexity is negatively associated with brain activity: A novel multimodal test of compensation theories of aging. *Neurobiology of Aging*. 
+
+* Madan, C. R. (in press). Age-related decrements in cortical gyrification: Evidence from an accelerated longitudinal dataset. *European Journal of Neuroscience*.

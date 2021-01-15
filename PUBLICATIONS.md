@@ -34,6 +34,8 @@ This is a list of publications that have used the calcFD toolbox. If you have us
 
 * Cascino, G., Canna, A., Monteleone, A. M., Russo, A. G., Prinster, A., Aiello, M., ... & Monteleone, P. (2020). Cortical Thickness, local Gyrification Index and Fractal Dimensionality in people with acute and recovered Anorexia Nervosa and in people with Bulimia Nervosa. *Psychiatry Research: Neuroimaging, 299*, 111069. doi:10.1016/j.pscychresns.2020.111069
 
-* McDonough, I. M., & Madan, C. R. (in press). Structural complexity is negatively associated with brain activity: A novel multimodal test of compensation theories of aging. *Neurobiology of Aging*. 
+## 2021
 
-* Madan, C. R. (in press). Age-related decrements in cortical gyrification: Evidence from an accelerated longitudinal dataset. *European Journal of Neuroscience*.
+* McDonough, I. M., & Madan, C. R. (2021). Structural complexity is negatively associated with brain activity: A novel multimodal test of compensation theories of aging. *Neurobiology of Aging, 98*, 185-196. doi:10.1016/j.neurobiolaging.2020.10.023
+
+* Madan, C. R. (in press). Age-related decrements in cortical gyrification: Evidence from an accelerated longitudinal dataset. *European Journal of Neuroscience*. doi:10.1111/ejn.15039

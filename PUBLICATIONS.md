@@ -1,6 +1,6 @@
 # Publications using calcFD
 
-This is a list of publications that have used the calcFD toolbox. If you have used the toolbox and would like to add your publication to the list, please submit a pull request or create an issue.
+This is a list of publications that have used the calcFD toolbox. If you have used the toolbox and would like to add your publication to the list, please create an issue in GitHub or email me.
 
 ## 2016
 
@@ -38,4 +38,4 @@ This is a list of publications that have used the calcFD toolbox. If you have us
 
 * McDonough, I. M., & Madan, C. R. (2021). Structural complexity is negatively associated with brain activity: A novel multimodal test of compensation theories of aging. *Neurobiology of Aging, 98*, 185-196. doi:10.1016/j.neurobiolaging.2020.10.023
 
-* Madan, C. R. (in press). Age-related decrements in cortical gyrification: Evidence from an accelerated longitudinal dataset. *European Journal of Neuroscience*. doi:10.1111/ejn.15039
+* Madan, C. R. (2021). Age-related decrements in cortical gyrification: Evidence from an accelerated longitudinal dataset. *European Journal of Neuroscience, 53*, 1661-1671. doi:10.1111/ejn.15039
